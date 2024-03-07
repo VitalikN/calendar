@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../Container.styled";
-import { ContainerCalendar, Section } from "./Calendar.styled";
+import { BoxDay, ContainerCalendar, Holiday, Section } from "./Calendar.styled";
 import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
 import { useDispatch, useSelector } from "react-redux";
 import taskSelector from "@/redux/tasks/taskSelector";
 import { daysOfWeek } from "../const";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
+import Modal from "../Modal/Modal";
 
 interface Holiday {
   id: string;
@@ -17,6 +18,9 @@ interface Holiday {
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string>("");
 
   const today = new Date();
   const todayDate = today.getDate();
@@ -29,8 +33,9 @@ const Calendar = () => {
     year: 2024,
     country: "UA",
   });
-
+  //
   const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
+
   if (data) {
     data?.forEach((holiday: Holiday) => {
       const date = new Date(holiday.date);
@@ -53,6 +58,26 @@ const Calendar = () => {
       combinedData[dateString].tasks.push(task);
     });
   }
+  //
+
+  const handleBoxDayClick = (dateString: string) => {
+    console.log("Clicked on date:", dateString);
+    setSelectedDate(dateString);
+    setMenuOpen(true);
+  };
+  //
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("body-no-scroll");
+    } else {
+      document.body.classList.remove("body-no-scroll");
+    }
+
+    return () => {
+      document.body.classList.remove("body-no-scroll");
+    };
+  }, [menuOpen]);
 
   const getDaysInMonth = (date: Date): number => {
     const year = date.getFullYear();
@@ -109,19 +134,23 @@ const Calendar = () => {
               const dayData = combinedData[dateString];
 
               return (
-                <div key={day} style={{ color: isToday ? "#0575e6" : "black" }}>
+                <BoxDay
+                  isToday={isToday}
+                  key={day}
+                  onClick={() => handleBoxDayClick(dateString)}
+                >
                   {day}
                   {dayData && (
-                    <div>
+                    <Holiday>
                       {dayData.holidays.map((holiday) => (
                         <div key={holiday.name}>{holiday.name}</div>
                       ))}
                       {dayData.tasks.map((task) => (
                         <div key={task.id}>{task.title}</div>
                       ))}
-                    </div>
+                    </Holiday>
                   )}
-                </div>
+                </BoxDay>
               );
             })}
           </ContainerCalendar>
@@ -130,7 +159,16 @@ const Calendar = () => {
     );
   };
 
-  return <div>{renderCalendar()}</div>;
+  return (
+    <div>
+      {renderCalendar()}
+      <Modal
+        isOpen={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        selectedDate={selectedDate}
+      />
+    </div>
+  );
 };
 
 export default Calendar;

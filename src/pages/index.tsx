@@ -7,7 +7,7 @@ import ReduxProvider from "@/redux/ReduxProvider/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <Head>
@@ -24,4 +24,5 @@ export default function Home() {
       </ReduxProvider>
     </>
   );
-}
+};
+export default Home;
