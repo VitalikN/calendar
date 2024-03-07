@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+
 import { Container } from "../Container.styled";
 import { HeaderStyled, LinkStyled, Nav, Title } from "./Header.styled";
 

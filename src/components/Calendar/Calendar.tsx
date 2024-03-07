@@ -1,60 +1,63 @@
+"use client";
+
 import React, { useState } from "react";
 import { Container } from "../Container.styled";
+import { ContainerCalendar, Section } from "./Calendar.styled";
+import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
+import { useDispatch, useSelector } from "react-redux";
+import taskSelector from "@/redux/tasks/taskSelector";
+import { daysOfWeek } from "../const";
+import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
 
-import {
-  ArrowBack,
-  ArrowForward,
-  Box,
-  BoxSearch,
-  ContainerCalendar,
-  HeaderCalendar,
-  Section,
-  Title,
-} from "./Calendar.styled";
+interface Holiday {
+  id: string;
+  name: string;
+  date: string;
+}
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+
   const today = new Date();
   const todayDate = today.getDate();
   const todayMonth = today.getMonth();
   const todayYear = today.getFullYear();
 
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const monthsOfYear = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const dispatch = useDispatch();
+  const tasks = useSelector(taskSelector.getTask);
+  const { data, error, isLoading } = useGetHolidaysQuery({
+    year: 2024,
+    country: "UA",
+  });
+
+  const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
+  if (data) {
+    data?.forEach((holiday: Holiday) => {
+      const date = new Date(holiday.date);
+      const dateString = date.toISOString().split("T")[0];
+      if (!combinedData[dateString]) {
+        combinedData[dateString] = { holidays: [], tasks: [] };
+      }
+      combinedData[dateString].holidays.push(holiday);
+    });
+  }
+
+  if (Array.isArray(tasks)) {
+    tasks.forEach((task) => {
+      const date = new Date(task.date);
+      const dateString = date.toISOString().split("T")[0];
+
+      if (!combinedData[dateString]) {
+        combinedData[dateString] = { holidays: [], tasks: [] };
+      }
+      combinedData[dateString].tasks.push(task);
+    });
+  }
 
   const getDaysInMonth = (date: Date): number => {
     const year = date.getFullYear();
     const month = date.getMonth();
     return new Date(year, month + 1, 0).getDate();
-  };
-
-  const prevMonth = () => {
-    setCurrentDate(
-      (prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1)
-    );
-  };
-
-  const nextMonth = () => {
-    setCurrentDate(
-      (prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1)
-    );
-  };
-
-  const goToToday = () => {
-    setCurrentDate(new Date());
   };
 
   const renderCalendar = () => {
@@ -81,39 +84,43 @@ const Calendar = () => {
     return (
       <Section>
         <Container>
-          <HeaderCalendar>
-            <Box>
-              <ArrowBack onClick={prevMonth} />
-
-              <button onClick={goToToday}>Today</button>
-              <ArrowForward onClick={nextMonth} />
-
-              <Title>
-                {monthsOfYear[currentDate.getMonth()]}{" "}
-                {currentDate.getFullYear()}
-              </Title>
-            </Box>
-            <BoxSearch>
-              <input type="text" placeholder="Search..." />
-              <input type="text" placeholder="filter labels..." />
-
-              <button>download image</button>
-              <button>export</button>
-            </BoxSearch>
-          </HeaderCalendar>
+          <HeaderCalendar
+            currentDate={currentDate}
+            setCurrentDate={setCurrentDate}
+          />
           <ContainerCalendar>
             {daysOfWeek.map((day) => (
               <div key={day}>{day}</div>
             ))}
             {renderEmptyCells(firstDayOfMonth)}
             {days.map((day) => {
+              const dateString = new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth(),
+                day + 1
+              )
+                .toISOString()
+                .split("T")[0];
               const isToday =
                 todayDate === day &&
                 todayMonth === currentDate.getMonth() &&
                 todayYear === currentDate.getFullYear();
+
+              const dayData = combinedData[dateString];
+
               return (
                 <div key={day} style={{ color: isToday ? "#0575e6" : "black" }}>
                   {day}
+                  {dayData && (
+                    <div>
+                      {dayData.holidays.map((holiday) => (
+                        <div key={holiday.name}>{holiday.name}</div>
+                      ))}
+                      {dayData.tasks.map((task) => (
+                        <div key={task.id}>{task.title}</div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               );
             })}
