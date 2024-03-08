@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { calendarApi } from "./calendar/calendarApi";
 import tasksReducer from "./tasks/tasksSlice";
-
+import colorReducer from "./color/colorSlice";
 import {
   persistStore,
   FLUSH,
@@ -21,11 +21,14 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, tasksReducer);
 
+const rootReducer = combineReducers({
+  color: colorReducer,
+  tasks: persistedReducer,
+  [calendarApi.reducerPath]: calendarApi.reducer,
+});
+
 const store = configureStore({
-  reducer: {
-    tasks: persistedReducer,
-    [calendarApi.reducerPath]: calendarApi.reducer,
-  },
+  reducer: rootReducer,
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

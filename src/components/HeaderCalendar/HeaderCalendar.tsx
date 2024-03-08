@@ -1,3 +1,4 @@
+import CheckboxColor from "../CheckboxColor/CheckboxColor";
 import { monthsOfYear } from "../const";
 import {
   ArrowBack,
@@ -35,6 +36,7 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
   const goToToday = () => {
     setCurrentDate(new Date());
   };
+
   return (
     <Header>
       <Box>
@@ -50,7 +52,8 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
       </Box>
       <BoxSearch>
         <Input type="text" placeholder="Search..." onChange={onSearchChange} />
-        <Input type="text" placeholder="filter labels..." />
+
+        <CheckboxColor />
 
         <button>download image</button>
         <button>export</button>

@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Formik } from "formik";
 
 import * as Yup from "yup";
 import {
@@ -77,9 +77,9 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, selectedDate }) => {
                 placeholder="New Task"
                 error={touched.title && errors.title}
               />
+
               <ErrorFeedback name="title" />
             </BoxInput>
-
             <BoxInputColor>
               <label>Color:</label>
               <ColorOption>

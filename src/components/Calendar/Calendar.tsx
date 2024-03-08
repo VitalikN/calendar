@@ -18,6 +18,7 @@ import taskSelector from "@/redux/tasks/taskSelector";
 import { daysOfWeek } from "../const";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
 import Modal from "../Modal/Modal";
+import colorSelector from "@/redux/color/colorSelector";
 
 interface Holiday {
   id: string;
@@ -35,7 +36,9 @@ const Calendar = () => {
   const today = new Date();
   const todayDate = today.getDate();
   const todayMonth = today.getMonth();
-  const todayYear = today.getFullYear();
+    const todayYear = today.getFullYear();
+    
+  const selectedColors = useSelector(colorSelector.getColor);
 
   const tasks = useSelector(taskSelector.getTask);
   const { data, error, isLoading } = useGetHolidaysQuery({
@@ -149,9 +152,19 @@ const Calendar = () => {
 
               const dayData = combinedData[dateString];
 
-              const filteredTasks = dayData?.tasks.filter((task) =>
-                task.title.toLowerCase().includes(searchText.toLowerCase())
-              );
+              const filteredTasks = dayData?.tasks.filter((task) => {
+                const titleMatch = task.title
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase());
+                const colorMatch =
+                  selectedColors.length > 0
+                    ? task.colors &&
+                      task.colors.some((color: string) =>
+                        selectedColors.includes(color)
+                      )
+                    : true;
+                return titleMatch && colorMatch;
+              });
               return (
                 <BoxDay
                   isToday={isToday}
@@ -164,7 +177,7 @@ const Calendar = () => {
                       {dayData.holidays.map((holiday) => (
                         <TaskBox key={holiday.name}>{holiday.name}</TaskBox>
                       ))}
-                      {filteredTasks.map(({ id, title, colors }) => (
+                      {filteredTasks?.map(({ id, title, colors }) => (
                         <TaskBox key={id}>
                           {colors?.length > 0 && (
                             <ColorBox>

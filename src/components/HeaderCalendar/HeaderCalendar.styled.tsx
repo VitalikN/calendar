@@ -62,6 +62,7 @@ export const Title = styled.h2`
 export const BoxSearch = styled.div`
   display: flex;
   gap: 20px;
+  align-items: center;
   @media screen and (max-width: 767px) {
     flex-direction: column;
   }
@@ -70,7 +71,7 @@ export const BoxSearch = styled.div`
 export const Input = styled.input`
   resize: none;
   border-radius: 10px;
-  color: #f2f2f2;
+  color: #fe9903;
   background: none;
   border: none;
   padding: 10px;
@@ -84,7 +85,6 @@ export const Input = styled.input`
     box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
       0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
     background-color: #fde8d2;
-    color: #fe9903;
     outline: none;
   }
 `;
