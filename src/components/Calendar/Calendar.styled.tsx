@@ -18,6 +18,7 @@ export const ContainerCalendar = styled.div`
 
 export const BoxDay = styled.div<BoxDayProps>`
   position: relative;
+  cursor: pointer;
   width: 100%;
   height: 100px;
   padding: 5px;
@@ -34,13 +35,31 @@ export const BoxDay = styled.div<BoxDayProps>`
   &:hover,
   &:focus {
     background-color: #fde8d2;
+    color: #fe9903;
   }
 `;
 export const Holiday = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 3px;
+  overflow: auto;
+`;
+export const TaskBox = styled.div`
   color: #fff;
   font-size: 0.8rem;
   background-color: #fe9903;
   border-radius: 5px;
   padding: 5px;
-  overflow: auto;
 `;
+export const ColorBox = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+export const Color = styled.span`
+  height: 10px;
+  width: 30px;
+  border-radius: 20px;
+  background-color: ${(props) => props.color};
+`;
+export const Text = styled.p``;

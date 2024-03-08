@@ -5,17 +5,20 @@ import {
   Box,
   BoxSearch,
   Header,
+  Input,
   Title,
 } from "./HeaderCalendar.styled";
 
 interface HeaderCalendarProps {
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
   currentDate,
   setCurrentDate,
+  onSearchChange,
 }) => {
   const prevMonth = () => {
     setCurrentDate(
@@ -46,8 +49,8 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
         </Title>
       </Box>
       <BoxSearch>
-        <input type="text" placeholder="Search..." />
-        <input type="text" placeholder="filter labels..." />
+        <Input type="text" placeholder="Search..." onChange={onSearchChange} />
+        <Input type="text" placeholder="filter labels..." />
 
         <button>download image</button>
         <button>export</button>

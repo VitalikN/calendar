@@ -54,7 +54,6 @@ export const Title = styled.h2`
   font-weight: 500;
   line-height: 18px;
   @media screen and (min-width: 768px) {
-    /* width: 205px; */
     font-size: 20px;
     font-weight: 500;
     line-height: 20px;
@@ -65,5 +64,27 @@ export const BoxSearch = styled.div`
   gap: 20px;
   @media screen and (max-width: 767px) {
     flex-direction: column;
+  }
+`;
+
+export const Input = styled.input`
+  resize: none;
+  border-radius: 10px;
+  color: #f2f2f2;
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  transition: all 0.5s;
+  &:hover,
+  &:focus {
+    scale: 1.07;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    background-color: #fde8d2;
+    color: #fe9903;
+    outline: none;
   }
 `;

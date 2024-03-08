@@ -2,9 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import { Container } from "../Container.styled";
-import { BoxDay, ContainerCalendar, Holiday, Section } from "./Calendar.styled";
+import {
+  BoxDay,
+  Color,
+  ColorBox,
+  ContainerCalendar,
+  Holiday,
+  Section,
+  TaskBox,
+  Text,
+} from "./Calendar.styled";
 import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import taskSelector from "@/redux/tasks/taskSelector";
 import { daysOfWeek } from "../const";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
@@ -21,19 +30,19 @@ const Calendar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [searchText, setSearchText] = useState("");
 
   const today = new Date();
   const todayDate = today.getDate();
   const todayMonth = today.getMonth();
   const todayYear = today.getFullYear();
 
-  const dispatch = useDispatch();
   const tasks = useSelector(taskSelector.getTask);
   const { data, error, isLoading } = useGetHolidaysQuery({
     year: 2024,
     country: "UA",
   });
-  //
+
   const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
 
   if (data) {
@@ -58,14 +67,16 @@ const Calendar = () => {
       combinedData[dateString].tasks.push(task);
     });
   }
-  //
 
-  const handleBoxDayClick = (dateString: string) => {
-    console.log("Clicked on date:", dateString);
+  const handleBoxDayClick = (dateString: string, isTask: boolean) => {
     setSelectedDate(dateString);
-    setMenuOpen(true);
+    if (!isTask) {
+      setMenuOpen(true);
+    }
   };
-  //
+  const handleTaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
 
   useEffect(() => {
     if (menuOpen) {
@@ -106,12 +117,17 @@ const Calendar = () => {
       return cells;
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchText(e.target.value);
+    };
+
     return (
       <Section>
         <Container>
           <HeaderCalendar
             currentDate={currentDate}
             setCurrentDate={setCurrentDate}
+            onSearchChange={handleSearchChange}
           />
           <ContainerCalendar>
             {daysOfWeek.map((day) => (
@@ -133,20 +149,32 @@ const Calendar = () => {
 
               const dayData = combinedData[dateString];
 
+              const filteredTasks = dayData?.tasks.filter((task) =>
+                task.title.toLowerCase().includes(searchText.toLowerCase())
+              );
               return (
                 <BoxDay
                   isToday={isToday}
                   key={day}
-                  onClick={() => handleBoxDayClick(dateString)}
+                  onClick={() => handleBoxDayClick(dateString, false)}
                 >
                   {day}
                   {dayData && (
-                    <Holiday>
+                    <Holiday onClick={(e) => handleTaskClick(e)}>
                       {dayData.holidays.map((holiday) => (
-                        <div key={holiday.name}>{holiday.name}</div>
+                        <TaskBox key={holiday.name}>{holiday.name}</TaskBox>
                       ))}
-                      {dayData.tasks.map((task) => (
-                        <div key={task.id}>{task.title}</div>
+                      {filteredTasks.map(({ id, title, colors }) => (
+                        <TaskBox key={id}>
+                          {colors?.length > 0 && (
+                            <ColorBox>
+                              {colors.map((color: string, index: number) => (
+                                <Color color={color} key={index}></Color>
+                              ))}
+                            </ColorBox>
+                          )}
+                          <Text>{title}</Text>
+                        </TaskBox>
                       ))}
                     </Holiday>
                   )}

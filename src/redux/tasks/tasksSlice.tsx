@@ -4,16 +4,17 @@ export interface Task {
   id: string;
   title: string;
   date: string;
+  colors: string[];
 }
 export interface TasksState {
   tasks: Task[];
 }
 
-const initialState: TasksState = {
+export const initialState: TasksState = {
   tasks: [],
 };
 
-const tasksSlice = createSlice({
+export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {

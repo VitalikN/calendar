@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { ModalContainer, ModalContent } from "./Modal.styled";
-import { IoClose } from "react-icons/io5";
 import AddTask from "../AddTask/AddTask";
 
 interface ModalProps {
