@@ -85,6 +85,7 @@ export const BoxInputColor = styled.div`
   position: relative;
   display: flex;
   width: 100%;
+  gap: 20px;
 `;
 export const ColorOption = styled.label`
   display: inline-block;

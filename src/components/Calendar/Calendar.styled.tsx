@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 
+import { MdOutlineCreate, MdDeleteForever } from "react-icons/md";
+
 interface BoxDayProps {
   isToday: boolean;
 }
@@ -47,8 +49,8 @@ export const Holiday = styled.div`
 `;
 export const TaskBox = styled.div`
   color: #fff;
-  font-size: 0.8rem;
-  background-color: #fe9903;
+  font-size: 13px;
+  background-color: #fe990380;
   border-radius: 5px;
   padding: 5px;
 `;
@@ -63,3 +65,26 @@ export const Color = styled.span`
   background-color: ${(props) => props.color};
 `;
 export const Text = styled.p``;
+
+export const Create = styled(MdOutlineCreate)`
+  cursor: pointer;
+
+  font-size: 20px;
+  transition: all 0.5s;
+  &:hover,
+  &:focus {
+    scale: 1.2;
+    color: #fe9903;
+  }
+`;
+export const Delete = styled(MdDeleteForever)`
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.5s;
+
+  &:hover,
+  &:focus {
+    scale: 1.2;
+    color: #fe9903;
+  }
+`;

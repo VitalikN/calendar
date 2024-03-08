@@ -7,18 +7,21 @@ import {
   Color,
   ColorBox,
   ContainerCalendar,
+  Create,
+  Delete,
   Holiday,
   Section,
   TaskBox,
   Text,
 } from "./Calendar.styled";
 import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import taskSelector from "@/redux/tasks/taskSelector";
 import { daysOfWeek } from "../const";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
 import Modal from "../Modal/Modal";
 import colorSelector from "@/redux/color/colorSelector";
+import { deleteTask } from "@/redux/tasks/tasksSlice";
 
 interface Holiday {
   id: string;
@@ -36,9 +39,10 @@ const Calendar = () => {
   const today = new Date();
   const todayDate = today.getDate();
   const todayMonth = today.getMonth();
-    const todayYear = today.getFullYear();
-    
+  const todayYear = today.getFullYear();
+
   const selectedColors = useSelector(colorSelector.getColor);
+  const dispatch = useDispatch();
 
   const tasks = useSelector(taskSelector.getTask);
   const { data, error, isLoading } = useGetHolidaysQuery({
@@ -47,6 +51,10 @@ const Calendar = () => {
   });
 
   const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
+
+  const handleDelete = (taskId: string) => {
+    dispatch(deleteTask({ id: taskId }));
+  };
 
   if (data) {
     data?.forEach((holiday: Holiday) => {
@@ -187,6 +195,8 @@ const Calendar = () => {
                             </ColorBox>
                           )}
                           <Text>{title}</Text>
+                          <Create />
+                          <Delete onClick={() => handleDelete(id)} />
                         </TaskBox>
                       ))}
                     </Holiday>
