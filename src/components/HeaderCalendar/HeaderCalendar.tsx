@@ -8,6 +8,7 @@ import {
   Header,
   Input,
   Title,
+  Btn,
 } from "./HeaderCalendar.styled";
 
 interface HeaderCalendarProps {
@@ -42,7 +43,9 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
       <Box>
         <ArrowBack onClick={prevMonth} />
 
-        <button onClick={goToToday}>Today</button>
+        <Btn type="button" onClick={goToToday}>
+          Today
+        </Btn>
         <ArrowForward onClick={nextMonth} />
 
         <Title>
@@ -55,8 +58,8 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
 
         <CheckboxColor />
 
-        <button>download image</button>
-        <button>export</button>
+        <Btn type="button">download image</Btn>
+        <Btn type="button">export</Btn>
       </BoxSearch>
     </Header>
   );
