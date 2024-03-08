@@ -35,6 +35,7 @@ const Calendar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [searchText, setSearchText] = useState("");
+  const [editTaskId, setEditTaskId] = useState<string | null>(null);
 
   const today = new Date();
   const todayDate = today.getDate();
@@ -87,6 +88,12 @@ const Calendar = () => {
   };
   const handleTaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
+  };
+
+  const handleUpdateTaskClick = (dateString: string, taskId: string) => {
+    setSelectedDate(dateString);
+    setEditTaskId(taskId);
+    setMenuOpen(true);
   };
 
   useEffect(() => {
@@ -195,7 +202,11 @@ const Calendar = () => {
                             </ColorBox>
                           )}
                           <Text>{title}</Text>
-                          <Create />
+                          <Create
+                            onClick={() =>
+                              handleUpdateTaskClick(dateString, id)
+                            }
+                          />
                           <Delete onClick={() => handleDelete(id)} />
                         </TaskBox>
                       ))}
@@ -215,8 +226,12 @@ const Calendar = () => {
       {renderCalendar()}
       <Modal
         isOpen={menuOpen}
-        onClose={() => setMenuOpen(false)}
+        onClose={() => {
+          setMenuOpen(false);
+          setEditTaskId(null);
+        }}
         selectedDate={selectedDate}
+        editTaskId={editTaskId}
       />
     </div>
   );

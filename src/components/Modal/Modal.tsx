@@ -1,14 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { ModalContainer, ModalContent } from "./Modal.styled";
 import AddTask from "../AddTask/AddTask";
+import UpdateTask from "../UpdateTask/UpdateTask";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedDate: string;
+  editTaskId?: string | null;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedDate }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  selectedDate,
+  editTaskId,
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,11 +39,20 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedDate }) => {
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+  console.log(selectedDate);
 
   return (
     <ModalContainer>
       <ModalContent ref={modalRef}>
-        <AddTask onClose={onClose} selectedDate={selectedDate} />
+        {editTaskId ? (
+          <UpdateTask
+            onClose={onClose}
+            selectedDate={selectedDate}
+            TaskId={editTaskId}
+          />
+        ) : (
+          <AddTask onClose={onClose} selectedDate={selectedDate} />
+        )}
       </ModalContent>
     </ModalContainer>
   );
