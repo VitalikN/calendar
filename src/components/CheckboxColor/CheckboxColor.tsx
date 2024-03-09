@@ -4,6 +4,7 @@ import {
   ColorIndicator,
   ColorInput,
   ColorOption,
+  Label,
 } from "./CheckboxColor.styled";
 import { deselectColor, selectColor } from "@/redux/color/colorSlice";
 
@@ -21,7 +22,7 @@ const CheckboxColor = () => {
 
   return (
     <BoxInputColor>
-      <label>Search Color:</label>
+      <Label>Search task by color:</Label>
       <ColorOption>
         <ColorInput
           type="checkbox"

@@ -16,6 +16,7 @@ export const ContainerCalendar = styled.section`
   gap: 0.5rem;
   grid-template-columns: repeat(7, 1fr);
   overflow: auto;
+  font-family: "FiraSans";
 `;
 
 export const BoxDay = styled.div<BoxDayProps>`
@@ -24,11 +25,14 @@ export const BoxDay = styled.div<BoxDayProps>`
   width: 100%;
   height: 100px;
   padding: 5px;
+  font-family: "FiraSans";
+
   border-radius: 5px;
   background-color: ${(props) => (props.isToday ? "#fde8d2" : "#ebebeb")};
   border: 1px solid ${(props) => (props.isToday ? "#fe9903" : "#ebebeb")};
   color: ${(props) => (props.isToday ? "#fe9903" : "black")};
   overflow: auto;
+
   transition: all 0.5s;
   @media screen and (min-width: 1280px) {
     min-height: 170px;
@@ -42,6 +46,7 @@ export const BoxDay = styled.div<BoxDayProps>`
 `;
 export const Holiday = styled.div`
   display: flex;
+
   flex-direction: column;
   flex-wrap: wrap;
   gap: 3px;
@@ -49,6 +54,7 @@ export const Holiday = styled.div`
 `;
 export const TaskBox = styled.div`
   color: #fff;
+
   font-size: 13px;
   background-color: #fe990380;
   border-radius: 5px;

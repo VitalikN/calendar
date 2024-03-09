@@ -20,7 +20,7 @@ export const Title = styled.h1`
   line-height: 20px;
   @media screen and (min-width: 768px) {
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 25px;
   }
 `;

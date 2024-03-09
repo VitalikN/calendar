@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import CheckboxColor from "../CheckboxColor/CheckboxColor";
-import { monthsOfYear, HeaderCalendarProps } from "../utils";
+import { monthsOfYear, HeaderCalendarProps, firaSans } from "../utils";
 import {
   ArrowBack,
   ArrowForward,
@@ -61,7 +61,7 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
       <BoxSearch>
         <Input
           type="text"
-          placeholder="Search..."
+          placeholder="Task search"
           onChange={handleSearchChange}
         />
 
@@ -69,7 +69,7 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
       </BoxSearch>
       <BoxSearch>
         <Btn type="button" onClick={saveImage}>
-          download image
+          Download image
         </Btn>
         <StyledlabelFile>
           <input

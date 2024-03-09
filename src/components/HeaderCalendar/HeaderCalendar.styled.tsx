@@ -50,6 +50,7 @@ export const ArrowBack = styled(MdOutlineArrowBackIos)`
 export const Btn = styled.button`
   cursor: pointer;
   display: flex;
+  font-family: "FiraSans";
   padding: 10px 20px;
   align-items: center;
   gap: 10px;
@@ -78,17 +79,20 @@ export const Btn = styled.button`
 export const Title = styled.h2`
   margin-left: auto;
   text-align: center;
-  font-size: 17px;
+  font-family: "FiraSans";
+  color: #fe9903;
+  font-size: 20px;
   font-weight: 500;
   line-height: 18px;
   @media screen and (min-width: 768px) {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 500;
     line-height: 20px;
   }
 `;
 export const BoxSearch = styled.div`
   display: flex;
+  font-family: "FiraSans";
   gap: 20px;
   align-items: center;
   justify-content: center;
@@ -106,6 +110,7 @@ export const Input = styled.input`
   background: none;
   border: none;
   padding: 10px;
+  font-family: "FiraSans";
   font-size: 16px;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);

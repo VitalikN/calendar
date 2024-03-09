@@ -157,8 +157,6 @@ const Calendar = () => {
     return (
       <Section ref={calendarRef}>
         <Container>
-          {/* <button onClick={handleExportClick}>Експорт</button> */}
-          {/* <input type="file" onChange={handleImportChange} /> */}
           <HeaderCalendar
             currentDate={currentDate}
             setCurrentDate={setCurrentDate}

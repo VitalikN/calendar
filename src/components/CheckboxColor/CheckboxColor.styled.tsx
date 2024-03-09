@@ -3,8 +3,12 @@ import styled from "@emotion/styled";
 export const BoxInputColor = styled.div`
   position: relative;
   display: flex;
+  align-items: center;
   gap: 10px;
-  /* width: 100%; */
+`;
+export const Label = styled.label`
+  font-size: 20px;
+  color: #fe9903;
 `;
 export const ColorOption = styled.label`
   display: inline-block;

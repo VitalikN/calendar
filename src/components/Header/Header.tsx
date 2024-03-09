@@ -1,11 +1,12 @@
 "use client";
 
 import { Container } from "../utils";
+import { firaSans } from "../utils";
 import { HeaderStyled, LinkStyled, Nav, Title } from "./Header.styled";
 
 const Header = () => {
   return (
-    <HeaderStyled>
+    <HeaderStyled className={firaSans.className}>
       <Container>
         <Nav>
           <Title>Calendar</Title>

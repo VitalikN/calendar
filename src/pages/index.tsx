@@ -1,10 +1,8 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import Calendar from "@/components/Calendar/Calendar";
 import Header from "@/components/Header/Header";
 import ReduxProvider from "@/redux/ReduxProvider/ReduxProvider";
-
-const inter = Inter({ subsets: ["latin"] });
+import { firaSans } from "@/components/utils";
 
 const Home = () => {
   return (
@@ -17,7 +15,7 @@ const Home = () => {
       </Head>
       <ReduxProvider>
         <Header />
-        <main className={` ${inter.className}`}>
+        <main className={firaSans.className}>
           <Calendar />
         </main>
       </ReduxProvider>

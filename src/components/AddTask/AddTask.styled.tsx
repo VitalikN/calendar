@@ -6,12 +6,11 @@ export const BoxContent = styled.div`
   position: relative;
   max-width: 500px;
   width: 80%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
+  font-family: "FiraSans";
   padding: 30px 20px;
   margin: 0 auto;
   margin-top: 50px;
@@ -40,6 +39,7 @@ export const Form = styled(form)`
   flex-direction: column;
   gap: 17px;
   width: 100%;
+  font-family: "FiraSans";
 `;
 export const BoxInput = styled.div`
   position: relative;
@@ -50,6 +50,8 @@ export const BoxInput = styled.div`
 `;
 export const Input = styled(Field)`
   resize: none;
+  font-family: "FiraSans";
+
   border-radius: 10px;
   color: #f2f2f2;
   background: none;
@@ -71,6 +73,8 @@ export const Input = styled(Field)`
 `;
 export const ErrorAdd = styled.span`
   font-size: 10px;
+  font-family: "FiraSans";
+
   font-style: normal;
   font-weight: 300;
   line-height: normal;
@@ -89,6 +93,7 @@ export const BoxInputColor = styled.div`
 `;
 export const ColorOption = styled.label`
   display: inline-block;
+
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -130,7 +135,7 @@ export const ColorIndicator = styled.span`
 export const Btn = styled.button`
   cursor: pointer;
   display: flex;
-  padding: 10px 20px;
+  padding: 9px;
   align-items: center;
   gap: 10px;
   flex: 1 0 0;
@@ -139,7 +144,9 @@ export const Btn = styled.button`
   justify-content: center;
   align-self: stretch;
   color: #fff;
-  font-size: 15px;
+  font-family: "FiraSans";
+
+  font-size: 18px;
   border: none;
   outline: none;
   background: none;
