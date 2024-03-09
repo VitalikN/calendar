@@ -1,6 +1,6 @@
 "use client";
 
-import { Container } from "../Container.styled";
+import { Container } from "../utils";
 import { HeaderStyled, LinkStyled, Nav, Title } from "./Header.styled";
 
 const Header = () => {

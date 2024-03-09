@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import CheckboxColor from "../CheckboxColor/CheckboxColor";
-import { monthsOfYear } from "../const";
+import { monthsOfYear, HeaderCalendarProps } from "../utils";
 import {
   ArrowBack,
   ArrowForward,
@@ -12,11 +12,6 @@ import {
   Btn,
 } from "./HeaderCalendar.styled";
 import { setSearchText } from "@/redux/tasks/tasksSlice";
-
-interface HeaderCalendarProps {
-  currentDate: Date;
-  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
-}
 
 const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
   currentDate,

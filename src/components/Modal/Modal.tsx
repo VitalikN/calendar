@@ -1,14 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { ModalContainer, ModalContent } from "./Modal.styled";
 import AddTask from "../AddTask/AddTask";
 import UpdateTask from "../UpdateTask/UpdateTask";
+import { ModalProps } from "../utils";
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  selectedDate: string;
-  editTaskId?: string | null;
-}
+import { ModalContainer, ModalContent } from "./Modal.styled";
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,

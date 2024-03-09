@@ -2,7 +2,6 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import Calendar from "@/components/Calendar/Calendar";
 import Header from "@/components/Header/Header";
-
 import ReduxProvider from "@/redux/ReduxProvider/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });

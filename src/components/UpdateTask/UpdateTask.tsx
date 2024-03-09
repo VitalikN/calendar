@@ -1,11 +1,11 @@
-import { ErrorMessage, Formik } from "formik";
+import { Formik } from "formik";
 
-import { Task, addTask, updateTask } from "@/redux/tasks/tasksSlice";
+import { Task, updateTask } from "@/redux/tasks/tasksSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { nanoid } from "nanoid";
+import { validationSchemaUpdate, FormValues, UpdateTaskProps } from "../utils";
+import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
 
-import * as Yup from "yup";
 import {
   BoxContent,
   BoxInput,
@@ -13,34 +13,13 @@ import {
   ColorIndicator,
   ColorInput,
   ColorOption,
-  ErrorAdd,
   Form,
   IconClose,
   Input,
   BoxInputColor,
 } from "../AddTask/AddTask.styled";
 
-const validationSchemaUpdate = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  color: Yup.array()
-    .min(1, "At least one color must be selected")
-    .of(Yup.string().oneOf(["red", "green", "blue"], "Invalid color")),
-});
-interface AddTaskProps {
-  onClose: () => void;
-  selectedDate: string;
-  TaskId: string;
-}
-export interface ErrorFeedbackProps {
-  name: string;
-}
-interface FormValues {
-  title: string;
-  date: string;
-  color: string[];
-}
-
-const UpdateTask: React.FC<AddTaskProps> = ({
+const UpdateTask: React.FC<UpdateTaskProps> = ({
   onClose,
   selectedDate,
   TaskId,
@@ -69,14 +48,6 @@ const UpdateTask: React.FC<AddTaskProps> = ({
       })
     );
     onClose();
-  };
-
-  const ErrorFeedback: React.FC<ErrorFeedbackProps> = ({ name }) => {
-    return (
-      <ErrorMessage name={name}>
-        {(errorMessage) => <ErrorAdd>{errorMessage}</ErrorAdd>}
-      </ErrorMessage>
-    );
   };
 
   return (

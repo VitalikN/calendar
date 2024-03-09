@@ -5,13 +5,12 @@ import React, { useEffect, useState } from "react";
 import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
 import { useDispatch, useSelector } from "react-redux";
 import taskSelector from "@/redux/tasks/taskSelector";
-import { daysOfWeek } from "../const";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
 import Modal from "../Modal/Modal";
+import { deleteTask, filterTasks } from "@/redux";
 import colorSelector from "@/redux/color/colorSelector";
-import { deleteTask, filterTasks } from "@/redux/tasks/tasksSlice";
 
-import { Container } from "../Container.styled";
+import { Container, daysOfWeek, HolidayCalendar } from "../utils";
 import {
   BoxDay,
   Color,
@@ -24,12 +23,6 @@ import {
   TaskBox,
   Text,
 } from "./Calendar.styled";
-
-interface Holiday {
-  id: string;
-  name: string;
-  date: string;
-}
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -61,7 +54,7 @@ const Calendar = () => {
   };
 
   if (data) {
-    data?.forEach((holiday: Holiday) => {
+    data?.forEach((holiday: HolidayCalendar) => {
       const date = new Date(holiday.date);
       const dateString = date.toISOString().split("T")[0];
       if (!combinedData[dateString]) {
