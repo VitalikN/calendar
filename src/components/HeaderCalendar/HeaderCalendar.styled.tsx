@@ -5,7 +5,7 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 
-export const Header = styled.div`
+export const Header = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -39,7 +39,6 @@ const Modal: React.FC<ModalProps> = ({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-  console.log(selectedDate);
 
   return (
     <ModalContainer>

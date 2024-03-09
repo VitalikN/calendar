@@ -1,6 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
+import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
+import { useDispatch, useSelector } from "react-redux";
+import taskSelector from "@/redux/tasks/taskSelector";
+import { daysOfWeek } from "../const";
+import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
+import Modal from "../Modal/Modal";
+import colorSelector from "@/redux/color/colorSelector";
+import { deleteTask, filterTasks } from "@/redux/tasks/tasksSlice";
+
 import { Container } from "../Container.styled";
 import {
   BoxDay,
@@ -14,14 +24,6 @@ import {
   TaskBox,
   Text,
 } from "./Calendar.styled";
-import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
-import { useDispatch, useSelector } from "react-redux";
-import taskSelector from "@/redux/tasks/taskSelector";
-import { daysOfWeek } from "../const";
-import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
-import Modal from "../Modal/Modal";
-import colorSelector from "@/redux/color/colorSelector";
-import { deleteTask } from "@/redux/tasks/tasksSlice";
 
 interface Holiday {
   id: string;
@@ -34,7 +36,6 @@ const Calendar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [searchText, setSearchText] = useState("");
   const [editTaskId, setEditTaskId] = useState<string | null>(null);
 
   const today = new Date();
@@ -42,7 +43,6 @@ const Calendar = () => {
   const todayMonth = today.getMonth();
   const todayYear = today.getFullYear();
 
-  const selectedColors = useSelector(colorSelector.getColor);
   const dispatch = useDispatch();
 
   const tasks = useSelector(taskSelector.getTask);
@@ -50,6 +50,9 @@ const Calendar = () => {
     year: 2024,
     country: "UA",
   });
+  const selectedColors = useSelector(colorSelector.getColor);
+
+  const searchText = useSelector(taskSelector.getSearchText);
 
   const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
 
@@ -135,17 +138,12 @@ const Calendar = () => {
       return cells;
     };
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchText(e.target.value);
-    };
-
     return (
       <Section>
         <Container>
           <HeaderCalendar
             currentDate={currentDate}
             setCurrentDate={setCurrentDate}
-            onSearchChange={handleSearchChange}
           />
           <ContainerCalendar>
             {daysOfWeek.map((day) => (
@@ -167,19 +165,12 @@ const Calendar = () => {
 
               const dayData = combinedData[dateString];
 
-              const filteredTasks = dayData?.tasks.filter((task) => {
-                const titleMatch = task.title
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase());
-                const colorMatch =
-                  selectedColors.length > 0
-                    ? task.colors &&
-                      task.colors.some((color: string) =>
-                        selectedColors.includes(color)
-                      )
-                    : true;
-                return titleMatch && colorMatch;
-              });
+              const filteredTasks = filterTasks(
+                dayData?.tasks,
+                searchText,
+                selectedColors
+              );
+
               return (
                 <BoxDay
                   isToday={isToday}
@@ -222,7 +213,7 @@ const Calendar = () => {
   };
 
   return (
-    <div>
+    <>
       {renderCalendar()}
       <Modal
         isOpen={menuOpen}
@@ -233,7 +224,7 @@ const Calendar = () => {
         selectedDate={selectedDate}
         editTaskId={editTaskId}
       />
-    </div>
+    </>
   );
 };
 

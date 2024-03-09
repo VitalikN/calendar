@@ -10,7 +10,7 @@ export const Section = styled.section`
   padding: 30px 0;
 `;
 
-export const ContainerCalendar = styled.div`
+export const ContainerCalendar = styled.section`
   padding: 30px 0;
   display: grid;
   gap: 0.5rem;
@@ -64,7 +64,9 @@ export const Color = styled.span`
   border-radius: 20px;
   background-color: ${(props) => props.color};
 `;
-export const Text = styled.p``;
+export const Text = styled.p`
+  padding: 5px 0;
+`;
 
 export const Create = styled(MdOutlineCreate)`
   cursor: pointer;

@@ -1,8 +1,9 @@
 const getTask = (state: any) => state.tasks.tasks;
-const getColor = (state: any) => state.color.selectedColors;
+const getSearchText = (state: any) => state.tasks.searchText;
+
 const taskSelector = {
   getTask,
-  getColor,
+  getSearchText,
 };
 
 export default taskSelector;

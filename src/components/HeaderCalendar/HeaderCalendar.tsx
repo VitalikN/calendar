@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import CheckboxColor from "../CheckboxColor/CheckboxColor";
 import { monthsOfYear } from "../const";
 import {
@@ -10,18 +11,23 @@ import {
   Title,
   Btn,
 } from "./HeaderCalendar.styled";
+import { setSearchText } from "@/redux/tasks/tasksSlice";
 
 interface HeaderCalendarProps {
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
-  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
   currentDate,
   setCurrentDate,
-  onSearchChange,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchText(e.target.value));
+  };
+
   const prevMonth = () => {
     setCurrentDate(
       (prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1)
@@ -54,7 +60,11 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
         </Title>
       </Box>
       <BoxSearch>
-        <Input type="text" placeholder="Search..." onChange={onSearchChange} />
+        <Input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchChange}
+        />
 
         <CheckboxColor />
 
