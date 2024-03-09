@@ -25,6 +25,7 @@ export interface HolidayCalendar {
 export interface HeaderCalendarProps {
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+  saveImage: () => void;
 }
 
 export interface ModalProps {

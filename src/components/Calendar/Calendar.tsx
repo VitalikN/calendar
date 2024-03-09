@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,7 @@ import {
   TaskBox,
   Text,
 } from "./Calendar.styled";
+import { useDownloadImage } from "../hooks";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -48,6 +49,13 @@ const Calendar = () => {
   const searchText = useSelector(taskSelector.getSearchText);
 
   const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
+
+  const calendarRef = useRef<HTMLDivElement | null>(null);
+  const downloadImage = useDownloadImage(calendarRef);
+
+  const handleDownloadImage = () => {
+    downloadImage();
+  };
 
   const handleDelete = (taskId: string) => {
     dispatch(deleteTask({ id: taskId }));
@@ -132,11 +140,12 @@ const Calendar = () => {
     };
 
     return (
-      <Section>
+      <Section ref={calendarRef}>
         <Container>
           <HeaderCalendar
             currentDate={currentDate}
             setCurrentDate={setCurrentDate}
+            saveImage={handleDownloadImage}
           />
           <ContainerCalendar>
             {daysOfWeek.map((day) => (

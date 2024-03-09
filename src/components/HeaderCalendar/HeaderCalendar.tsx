@@ -16,6 +16,7 @@ import { setSearchText } from "@/redux/tasks/tasksSlice";
 const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
   currentDate,
   setCurrentDate,
+  saveImage,
 }) => {
   const dispatch = useDispatch();
 
@@ -63,7 +64,9 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
 
         <CheckboxColor />
 
-        <Btn type="button">download image</Btn>
+        <Btn type="button" onClick={saveImage}>
+          download image
+        </Btn>
         <Btn type="button">export</Btn>
       </BoxSearch>
     </Header>
