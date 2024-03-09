@@ -24,6 +24,7 @@ import {
   Text,
 } from "./Calendar.styled";
 import { useDownloadImage } from "../hooks";
+import useCalendarFileOperations from "../hooks/useCalendarFileOperations";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -52,6 +53,20 @@ const Calendar = () => {
 
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const downloadImage = useDownloadImage(calendarRef);
+
+  const { exportCalendarToFile, importCalendarFromFile } =
+    useCalendarFileOperations();
+
+  const handleExportClick = () => {
+    exportCalendarToFile(combinedData);
+  };
+
+  const handleImportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      importCalendarFromFile(file);
+    }
+  };
 
   const handleDownloadImage = () => {
     downloadImage();
@@ -142,10 +157,14 @@ const Calendar = () => {
     return (
       <Section ref={calendarRef}>
         <Container>
+          {/* <button onClick={handleExportClick}>Експорт</button> */}
+          {/* <input type="file" onChange={handleImportChange} /> */}
           <HeaderCalendar
             currentDate={currentDate}
             setCurrentDate={setCurrentDate}
             saveImage={handleDownloadImage}
+            importFile={handleImportChange}
+            exportFile={handleExportClick}
           />
           <ContainerCalendar>
             {daysOfWeek.map((day) => (

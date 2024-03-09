@@ -26,6 +26,8 @@ export interface HeaderCalendarProps {
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
   saveImage: () => void;
+  importFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  exportFile?: () => void;
 }
 
 export interface ModalProps {

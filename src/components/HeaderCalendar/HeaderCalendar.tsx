@@ -10,6 +10,7 @@ import {
   Input,
   Title,
   Btn,
+  StyledlabelFile,
 } from "./HeaderCalendar.styled";
 import { setSearchText } from "@/redux/tasks/tasksSlice";
 
@@ -17,6 +18,8 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
   currentDate,
   setCurrentDate,
   saveImage,
+  importFile,
+  exportFile,
 }) => {
   const dispatch = useDispatch();
 
@@ -63,11 +66,23 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
         />
 
         <CheckboxColor />
-
+      </BoxSearch>
+      <BoxSearch>
         <Btn type="button" onClick={saveImage}>
           download image
         </Btn>
-        <Btn type="button">export</Btn>
+        <StyledlabelFile>
+          <input
+            type="file"
+            onChange={importFile}
+            style={{ display: "none" }}
+          />
+          Import
+        </StyledlabelFile>
+
+        <Btn type="button" onClick={exportFile}>
+          Export
+        </Btn>
       </BoxSearch>
     </Header>
   );
