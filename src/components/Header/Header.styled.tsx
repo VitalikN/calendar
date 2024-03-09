@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 
 export const HeaderStyled = styled.header`
-  background: linear-gradient(to right, #fe9903, #ea7d01, #fea903);
-  color: #fff;
+  background: var(--background-header);
+  color: var(--color-header);
 `;
 
 export const Nav = styled.nav`
@@ -16,11 +16,11 @@ export const Nav = styled.nav`
 `;
 export const Title = styled.h1`
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 20px;
   @media screen and (min-width: 768px) {
     font-size: 25px;
-    font-weight: 500;
+
     line-height: 25px;
   }
 `;

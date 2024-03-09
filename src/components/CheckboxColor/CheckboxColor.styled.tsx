@@ -8,12 +8,12 @@ export const BoxInputColor = styled.div`
 `;
 export const Label = styled.label`
   font-size: 20px;
-  color: #fe9903;
+  color: var(--color-text);
 `;
 export const ColorOption = styled.label`
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   margin-right: 10px;
   cursor: pointer;
@@ -33,6 +33,12 @@ export const ColorIndicator = styled.span`
   border-radius: 50%;
   background-color: ${(props) => props.color};
   position: relative;
+  transition: all 0.5s;
+  &:focus,
+  &:hover {
+    scale: 1.05;
+    box-shadow: var(--box-shadow-hover);
+  }
 
   &::before {
     content: "";
@@ -44,7 +50,7 @@ export const ColorIndicator = styled.span`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: var(--border);
     opacity: 0;
   }
 `;

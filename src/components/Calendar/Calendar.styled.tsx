@@ -28,9 +28,15 @@ export const BoxDay = styled.div<BoxDayProps>`
   font-family: "FiraSans";
 
   border-radius: 5px;
-  background-color: ${(props) => (props.isToday ? "#fde8d2" : "#ebebeb")};
-  border: 1px solid ${(props) => (props.isToday ? "#fe9903" : "#ebebeb")};
-  color: ${(props) => (props.isToday ? "#fe9903" : "black")};
+  background-color: ${(props) =>
+    props.isToday
+      ? "var(--background-hover-btn)"
+      : "var(--background-color-day)"};
+  border: 1px solid
+    ${(props) =>
+      props.isToday ? "var(--color-text)" : "var(--background-color-day)"};
+  color: ${(props) =>
+    props.isToday ? "var(--color-hover)" : "var(--color-text)"};
   overflow: auto;
 
   transition: all 0.5s;
@@ -40,8 +46,8 @@ export const BoxDay = styled.div<BoxDayProps>`
 
   &:hover,
   &:focus {
-    background-color: #fde8d2;
-    color: #fe9903;
+    background-color: var(--background-hover-btn);
+    color: var(--color-hover);
   }
 `;
 export const Holiday = styled.div`
@@ -53,10 +59,10 @@ export const Holiday = styled.div`
   overflow: auto;
 `;
 export const TaskBox = styled.div`
-  color: #fff;
+  color: var(--color-text);
 
   font-size: 13px;
-  background-color: #fe990380;
+  background-color: var(--background-color-task);
   border-radius: 5px;
   padding: 5px;
 `;
@@ -65,8 +71,8 @@ export const ColorBox = styled.div`
   gap: 5px;
 `;
 export const Color = styled.span`
-  height: 10px;
-  width: 30px;
+  height: 6px;
+  width: 20px;
   border-radius: 20px;
   background-color: ${(props) => props.color};
 `;
@@ -82,7 +88,7 @@ export const Create = styled(MdOutlineCreate)`
   &:hover,
   &:focus {
     scale: 1.2;
-    color: #fe9903;
+    color: var(--color-text);
   }
 `;
 export const Delete = styled(MdDeleteForever)`
@@ -93,6 +99,6 @@ export const Delete = styled(MdDeleteForever)`
   &:hover,
   &:focus {
     scale: 1.2;
-    color: #fe9903;
+    color: var(--color-text);
   }
 `;

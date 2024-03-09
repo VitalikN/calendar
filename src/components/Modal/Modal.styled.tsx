@@ -5,7 +5,7 @@ export const ModalContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(35, 34, 34, 0.5);
+  background-color: var(--overley);
 `;
 
 export const ModalContent = styled.div``;

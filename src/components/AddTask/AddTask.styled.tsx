@@ -16,8 +16,8 @@ export const BoxContent = styled.div`
   margin-top: 50px;
 
   border-radius: 10px;
-  background: linear-gradient(to right, #fe9903, #ea7d01, #fea903);
-  color: #fff;
+  background: var(--background-form);
+  color: var(--color-text);
 `;
 export const IconClose = styled(IoClose)`
   cursor: pointer;
@@ -53,21 +53,19 @@ export const Input = styled(Field)`
   font-family: "FiraSans";
 
   border-radius: 10px;
-  color: #f2f2f2;
-  background: none;
+  background-color: var(--background-input);
+  color: var(--color-text);
   border: none;
   padding: 10px;
   font-size: 16px;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--box-shadow);
   transition: all 0.5s;
   &:hover,
   &:focus {
-    scale: 1.07;
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-      0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-    background-color: #fde8d2;
-    color: #fe9903;
+    scale: 1.04;
+    box-shadow: var(--box-shadow-hover);
+    background-color: var(--hover-background-input);
+    color: var(--color-hover);
     outline: none;
   }
 `;
@@ -78,7 +76,7 @@ export const ErrorAdd = styled.span`
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  color: red;
+  color: var(--color-error);
   position: absolute;
   left: 10px;
   bottom: -15px;
@@ -94,8 +92,8 @@ export const BoxInputColor = styled.div`
 export const ColorOption = styled.label`
   display: inline-block;
 
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   margin-right: 10px;
   cursor: pointer;
@@ -116,6 +114,12 @@ export const ColorIndicator = styled.span`
   border-radius: 50%;
   background-color: ${(props) => props.color};
   position: relative;
+  transition: all 0.5s;
+  &:focus,
+  &:hover {
+    scale: 1.05;
+    box-shadow: var(--box-shadow-hover);
+  }
 
   &::before {
     content: "";
@@ -127,7 +131,7 @@ export const ColorIndicator = styled.span`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: var(--border);
     opacity: 0;
   }
 `;
@@ -143,22 +147,20 @@ export const Btn = styled.button`
   flex-direction: column;
   justify-content: center;
   align-self: stretch;
-  color: #fff;
+  background-color: var(--background-btn);
+  color: var(--color-text);
   font-family: "FiraSans";
 
   font-size: 18px;
   border: none;
   outline: none;
-  background: none;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-
+  box-shadow: var(--box-shadow);
   transition: all 0.5s;
+  &:focus,
   &:hover {
     scale: 1.05;
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-      0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-    background-color: #fde8d2;
-    color: #fe9903;
+    box-shadow: var(--box-shadow-hover);
+    background-color: var(--background-hover-btn);
+    color: var(--color-hover);
   }
 `;
