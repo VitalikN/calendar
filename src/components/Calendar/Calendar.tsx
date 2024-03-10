@@ -1,131 +1,29 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-
-import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
-import { useDispatch, useSelector } from "react-redux";
-import taskSelector from "@/redux/tasks/taskSelector";
+import React, { useRef, useState } from "react";
+import { filterTasks } from "@/redux";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
 import Modal from "../Modal/Modal";
-import { deleteTask, filterTasks } from "@/redux";
-import colorSelector from "@/redux/color/colorSelector";
+import TasksDay from "../TasksDay/TasksDay";
+import { Container, daysOfWeek } from "../utils";
+import { useModal, useCalendarData } from "../hooks";
+import { Section, ContainerCalendar } from "./Calendar.styled";
 
-import { Container, daysOfWeek, HolidayCalendar } from "../utils";
-import {
-  BoxDay,
-  Color,
-  ColorBox,
-  ContainerCalendar,
-  Create,
-  Delete,
-  Holiday,
-  Section,
-  TaskBox,
-  Text,
-} from "./Calendar.styled";
-import { useDownloadImage } from "../hooks";
-import useCalendarFileOperations from "../hooks/useCalendarFileOperations";
-
+// import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [editTaskId, setEditTaskId] = useState<string | null>(null);
+
+  const { combinedData, selectedColors, searchText } = useCalendarData();
+  const calendarRef = useRef<HTMLDivElement | null>(null);
+  const { menuOpen, setMenuOpen, handleClose } = useModal({ setEditTaskId });
 
   const today = new Date();
   const todayDate = today.getDate();
   const todayMonth = today.getMonth();
   const todayYear = today.getFullYear();
-
-  const dispatch = useDispatch();
-
-  const tasks = useSelector(taskSelector.getTask);
-  const { data, error, isLoading } = useGetHolidaysQuery({
-    year: 2024,
-    country: "UA",
-  });
-  const selectedColors = useSelector(colorSelector.getColor);
-
-  const searchText = useSelector(taskSelector.getSearchText);
-
-  const combinedData: { [key: string]: { holidays: any[]; tasks: any[] } } = {};
-
-  const calendarRef = useRef<HTMLDivElement | null>(null);
-  const downloadImage = useDownloadImage(calendarRef);
-
-  const { exportCalendarToFile, importCalendarFromFile } =
-    useCalendarFileOperations();
-
-  const handleExportClick = () => {
-    exportCalendarToFile(combinedData);
-  };
-
-  const handleImportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      importCalendarFromFile(file);
-    }
-  };
-
-  const handleDownloadImage = () => {
-    downloadImage();
-  };
-
-  const handleDelete = (taskId: string) => {
-    dispatch(deleteTask({ id: taskId }));
-  };
-
-  if (data) {
-    data?.forEach((holiday: HolidayCalendar) => {
-      const date = new Date(holiday.date);
-      const dateString = date.toISOString().split("T")[0];
-      if (!combinedData[dateString]) {
-        combinedData[dateString] = { holidays: [], tasks: [] };
-      }
-      combinedData[dateString].holidays.push(holiday);
-    });
-  }
-
-  if (Array.isArray(tasks)) {
-    tasks.forEach((task) => {
-      const date = new Date(task.date);
-      const dateString = date.toISOString().split("T")[0];
-
-      if (!combinedData[dateString]) {
-        combinedData[dateString] = { holidays: [], tasks: [] };
-      }
-      combinedData[dateString].tasks.push(task);
-    });
-  }
-
-  const handleBoxDayClick = (dateString: string, isTask: boolean) => {
-    setSelectedDate(dateString);
-    if (!isTask) {
-      setMenuOpen(true);
-    }
-  };
-  const handleTaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-  };
-
-  const handleUpdateTaskClick = (dateString: string, taskId: string) => {
-    setSelectedDate(dateString);
-    setEditTaskId(taskId);
-    setMenuOpen(true);
-  };
-
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add("body-no-scroll");
-    } else {
-      document.body.classList.remove("body-no-scroll");
-    }
-
-    return () => {
-      document.body.classList.remove("body-no-scroll");
-    };
-  }, [menuOpen]);
 
   const getDaysInMonth = (date: Date): number => {
     const year = date.getFullYear();
@@ -158,17 +56,16 @@ const Calendar = () => {
       <Section ref={calendarRef}>
         <Container>
           <HeaderCalendar
-            currentDate={currentDate}
+            calendarRef={calendarRef}
+            combinedData={combinedData}
             setCurrentDate={setCurrentDate}
-            saveImage={handleDownloadImage}
-            importFile={handleImportChange}
-            exportFile={handleExportClick}
           />
           <ContainerCalendar>
             {daysOfWeek.map((day) => (
               <div key={day}>{day}</div>
             ))}
             {renderEmptyCells(firstDayOfMonth)}
+
             {days.map((day) => {
               const dateString = new Date(
                 currentDate.getFullYear(),
@@ -191,38 +88,17 @@ const Calendar = () => {
               );
 
               return (
-                <BoxDay
+                <TasksDay
+                  dateString={dateString}
                   isToday={isToday}
                   key={day}
-                  onClick={() => handleBoxDayClick(dateString, false)}
-                >
-                  {day}
-                  {dayData && (
-                    <Holiday onClick={(e) => handleTaskClick(e)}>
-                      {dayData.holidays.map((holiday) => (
-                        <TaskBox key={holiday.name}>{holiday.name}</TaskBox>
-                      ))}
-                      {filteredTasks?.map(({ id, title, colors }) => (
-                        <TaskBox key={id}>
-                          {colors?.length > 0 && (
-                            <ColorBox>
-                              {colors.map((color: string, index: number) => (
-                                <Color color={color} key={index}></Color>
-                              ))}
-                            </ColorBox>
-                          )}
-                          <Text>{title}</Text>
-                          <Create
-                            onClick={() =>
-                              handleUpdateTaskClick(dateString, id)
-                            }
-                          />
-                          <Delete onClick={() => handleDelete(id)} />
-                        </TaskBox>
-                      ))}
-                    </Holiday>
-                  )}
-                </BoxDay>
+                  day={day}
+                  dayData={dayData}
+                  filteredTasks={filteredTasks}
+                  setMenuOpen={setMenuOpen}
+                  setSelectedDate={setSelectedDate}
+                  setEditTaskId={setEditTaskId}
+                />
               );
             })}
           </ContainerCalendar>
@@ -236,10 +112,7 @@ const Calendar = () => {
       {renderCalendar()}
       <Modal
         isOpen={menuOpen}
-        onClose={() => {
-          setMenuOpen(false);
-          setEditTaskId(null);
-        }}
+        onClose={() => handleClose()}
         selectedDate={selectedDate}
         editTaskId={editTaskId}
       />

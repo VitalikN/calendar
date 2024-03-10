@@ -4,6 +4,7 @@ import UpdateTask from "../UpdateTask/UpdateTask";
 import { ModalProps } from "../utils";
 
 import { ModalContainer, ModalContent } from "./Modal.styled";
+import { useModal } from "../hooks";
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,
@@ -12,7 +13,6 @@ const Modal: React.FC<ModalProps> = ({
   editTaskId,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

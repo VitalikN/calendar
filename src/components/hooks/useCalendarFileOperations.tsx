@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useCalendarFileOperations = () => {
+export const useCalendarFileOperations = () => {
   const [error, setError] = useState<string | null>(null);
 
   const exportCalendarToFile = (data: any) => {
@@ -29,5 +29,3 @@ const useCalendarFileOperations = () => {
 
   return { exportCalendarToFile, importCalendarFromFile, error };
 };
-
-export default useCalendarFileOperations;

@@ -15,7 +15,7 @@ export const Nav = styled.nav`
   padding: 20px 0;
 `;
 export const Title = styled.h1`
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 20px;
   @media screen and (min-width: 768px) {
@@ -33,7 +33,7 @@ export const LinkStyled = styled(Link)`
   }
   &:hover,
   &:focus {
-    font-size: 15px;
+    font-size: 14px;
     @media screen and (min-width: 768px) {
       font-size: 20px;
     }

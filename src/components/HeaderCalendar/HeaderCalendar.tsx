@@ -1,6 +1,5 @@
-import { useDispatch } from "react-redux";
 import CheckboxColor from "../CheckboxColor/CheckboxColor";
-import { monthsOfYear, HeaderCalendarProps, firaSans } from "../utils";
+import { monthsOfYear, HeaderCalendarProps } from "../utils";
 import {
   ArrowBack,
   ArrowForward,
@@ -12,37 +11,23 @@ import {
   Btn,
   StyledlabelFile,
 } from "./HeaderCalendar.styled";
-import { setSearchText } from "@/redux/tasks/tasksSlice";
+import { useHeaderCalendar } from "../hooks";
 
 const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
-  currentDate,
   setCurrentDate,
-  saveImage,
-  importFile,
-  exportFile,
+  calendarRef,
+  combinedData,
 }) => {
-  const dispatch = useDispatch();
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchText(e.target.value));
-  };
-
-  const prevMonth = () => {
-    setCurrentDate(
-      (prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1)
-    );
-  };
-
-  const nextMonth = () => {
-    setCurrentDate(
-      (prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1)
-    );
-  };
-
-  const goToToday = () => {
-    setCurrentDate(new Date());
-  };
-
+  const {
+    prevMonth,
+    nextMonth,
+    goToToday,
+    handleSearchChange,
+    handleDownloadImage,
+    handleImportChange,
+    handleExportClick,
+  } = useHeaderCalendar({ combinedData, calendarRef, setCurrentDate });
+  const currentDate = new Date();
   return (
     <Header>
       <Box>
@@ -68,19 +53,19 @@ const HeaderCalendar: React.FC<HeaderCalendarProps> = ({
         <CheckboxColor />
       </BoxSearch>
       <BoxSearch>
-        <Btn type="button" onClick={saveImage}>
+        <Btn type="button" onClick={handleDownloadImage}>
           Download image
         </Btn>
         <StyledlabelFile>
           <input
             type="file"
-            onChange={importFile}
+            onChange={handleImportChange}
             style={{ display: "none" }}
           />
           Import
         </StyledlabelFile>
 
-        <Btn type="button" onClick={exportFile}>
+        <Btn type="button" onClick={handleExportClick}>
           Export
         </Btn>
       </BoxSearch>
