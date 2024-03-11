@@ -9,7 +9,6 @@ import { Container, daysOfWeek } from "../utils";
 import { useModal, useCalendarData } from "../hooks";
 import { Section, ContainerCalendar } from "./Calendar.styled";
 
-// import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -88,6 +87,8 @@ const Calendar = () => {
               );
 
               return (
+                // <DragItem key={day} onDrag={() => console.log("Dragging")}>
+
                 <TasksDay
                   dateString={dateString}
                   isToday={isToday}

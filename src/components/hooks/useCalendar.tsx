@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { useGetHolidaysQuery } from "@/redux/calendar/calendarApi";
 import { useSelector } from "react-redux";
 import taskSelector from "@/redux/tasks/taskSelector";
-import { filterTasks } from "@/redux";
 import colorSelector from "@/redux/color/colorSelector";
-import { HolidayCalendar } from "../utils";
+import { HolidayCalendar, TasksDayProps } from "../utils";
 
 export const useCalendarData = () => {
   const [combinedData, setCombinedData] = useState<{
-    [key: string]: { holidays: any[]; tasks: any[] };
+    [key: string]: { holidays: HolidayCalendar[]; tasks: TasksDayProps[] };
   }>({});
 
   const tasks = useSelector(taskSelector.getTask);
