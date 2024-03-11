@@ -18,9 +18,11 @@
 
   --background-hover-btn: #515151;
   --background-btn: rgb(153, 153, 153);
+  --background-btn-form: #ebebeb;
+  --background-input-form: #ebebeb;
+  --hover-background-input: #515151;
 
   --background-input: rgb(153, 153, 153);
-  --hover-background-input: #515151;
 
   --color-hover: #fff;
   --color-text: #515151;

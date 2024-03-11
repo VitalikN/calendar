@@ -53,7 +53,7 @@ export const Input = styled(Field)`
   font-family: "FiraSans";
 
   border-radius: 10px;
-  background-color: var(--background-input);
+  background-color: var(--background-input-form);
   color: var(--color-text);
   border: none;
   padding: 10px;
@@ -147,7 +147,7 @@ export const Btn = styled.button`
   flex-direction: column;
   justify-content: center;
   align-self: stretch;
-  background-color: var(--background-btn);
+  background-color: var(--background-btn-form);
   color: var(--color-text);
   font-family: "FiraSans";
 
