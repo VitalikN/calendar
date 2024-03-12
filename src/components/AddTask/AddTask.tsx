@@ -1,11 +1,8 @@
-import { addTask } from "@/redux";
-import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 
-import { nanoid } from "nanoid";
-import { validationSchema, AddTaskProps, FormValues } from "../utils";
+import { validationSchema, AddTaskProps } from "../utils";
+import { useAddTask } from "../hooks";
 import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
-
 import {
   BoxContent,
   BoxInput,
@@ -20,13 +17,7 @@ import {
 } from "./AddTask.styled";
 
 const AddTask: React.FC<AddTaskProps> = ({ onClose, selectedDate }) => {
-  const dispatch = useDispatch();
-
-  const handleSubmit = (values: FormValues) => {
-    const { title, date, color } = values;
-    dispatch(addTask({ id: nanoid(), title, date, colors: color }));
-    onClose();
-  };
+  const { handleSubmit } = useAddTask({ onClose });
 
   return (
     <BoxContent>

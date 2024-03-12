@@ -11,7 +11,9 @@ export interface FormValues {
   date: string;
   color: string[];
 }
-
+export interface useAddTaskProps {
+  onClose: () => void;
+}
 export interface AddTaskProps {
   onClose: () => void;
   selectedDate: string;

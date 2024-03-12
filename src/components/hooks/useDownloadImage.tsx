@@ -1,5 +1,6 @@
 import { RefObject } from "react";
 import html2canvas, { Options as MyHtml2CanvasOptions } from "html2canvas";
+import { toast } from "react-toastify";
 
 export const useDownloadImage = (myComponentRef: RefObject<HTMLElement>) => {
   const saveImage = () => {
@@ -18,6 +19,7 @@ export const useDownloadImage = (myComponentRef: RefObject<HTMLElement>) => {
         link.href = dataUrl;
         link.download = "My_screenshot.png";
         link.click();
+        toast.success(`Calendar Download successfully`);
       } catch (error) {
         console.error("canvas error:", error);
       }

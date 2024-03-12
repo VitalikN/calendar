@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useCheckboxColor } from "../hooks";
 import {
   BoxInputColor,
   ColorIndicator,
@@ -6,20 +6,9 @@ import {
   ColorOption,
   Label,
 } from "./CheckboxColor.styled";
-import { deselectColor, selectColor } from "@/redux/color/colorSlice";
 
 const CheckboxColor = () => {
-  const dispatch = useDispatch();
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      dispatch(selectColor(value));
-    } else {
-      dispatch(deselectColor(value));
-    }
-  };
-
+  const { handleCheckboxChange } = useCheckboxColor();
   return (
     <BoxInputColor>
       <Label>Search task by color:</Label>

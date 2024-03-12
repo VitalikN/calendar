@@ -1,6 +1,7 @@
 import { deleteTask } from "@/redux";
 import { useDispatch } from "react-redux";
 import { UseTasksDayProps } from "../utils";
+import { toast } from "react-toastify";
 
 export const useTasksDay = ({
   setSelectedDate,
@@ -28,6 +29,7 @@ export const useTasksDay = ({
 
   const handleDelete = (taskId: string) => {
     dispatch(deleteTask({ id: taskId }));
+    toast.success(`Task deleted successfully`);
   };
 
   return {

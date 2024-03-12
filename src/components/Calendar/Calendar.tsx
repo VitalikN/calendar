@@ -8,6 +8,8 @@ import TasksDay from "../TasksDay/TasksDay";
 import { Container, daysOfWeek } from "../utils";
 import { useModal, useCalendarData } from "../hooks";
 import { Section, ContainerCalendar } from "./Calendar.styled";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -54,6 +56,12 @@ const Calendar = () => {
     return (
       <Section ref={calendarRef}>
         <Container>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            closeOnClick
+            theme="light"
+          />
           <HeaderCalendar
             calendarRef={calendarRef}
             combinedData={combinedData}

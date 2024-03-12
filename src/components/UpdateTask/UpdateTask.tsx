@@ -1,10 +1,7 @@
 import { Formik } from "formik";
-
-import { Task, updateTask } from "@/redux/tasks/tasksSlice";
-import { useDispatch, useSelector } from "react-redux";
-
-import { validationSchemaUpdate, FormValues, UpdateTaskProps } from "../utils";
+import { validationSchemaUpdate, UpdateTaskProps } from "../utils";
 import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
+import { useUpdateTask } from "../hooks";
 
 import {
   BoxContent,
@@ -24,32 +21,11 @@ const UpdateTask: React.FC<UpdateTaskProps> = ({
   selectedDate,
   TaskId,
 }) => {
-  const dispatch = useDispatch();
-
-  const task = useSelector((state: any) =>
-    state.tasks.tasks.find((task: Task) => task.id === TaskId)
-  );
-
-  const initialValues: FormValues = {
-    title: task ? task.title : "",
-    color: task ? task.colors : [],
-    date: selectedDate,
-  };
-
-  const handleSubmit = (values: FormValues) => {
-    const { title, date, color } = values;
-
-    dispatch(
-      updateTask({
-        id: TaskId,
-        title: title,
-        date: date,
-        colors: color,
-      })
-    );
-    onClose();
-  };
-
+  const { handleSubmit, initialValues } = useUpdateTask({
+    TaskId,
+    onClose,
+    selectedDate,
+  });
   return (
     <BoxContent>
       <IconClose onClick={onClose} />
